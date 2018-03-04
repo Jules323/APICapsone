@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Animals At Risk</title>
+	<meta charset="utf-8">
+	<meta name="viewpoint" content="width=device-width">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<link href="lity.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<div class="container">
+
+		<main role="main">
+			<div class="js-search">
+				<form class="js-search-form">
+
+				<fieldset>mammal search</fieldset>
+					<legend>mammal search</legend>
+					<label for="query"></label>
+					<input id="mammal-search" type="text" class="js-query" placeholder="e.g. Elephant" required>
+					<button name="mammal-search" type="submit" class="js-search-btn">Search</button>
+					
+				</form>
+			</div>
+		</main>
+
+		<section role="region">
+			<div id="GBIF-results" class="js-GBIF-results">
+
+			</div>	
+		</section>
+
+		<section role="region">
+			<div id="Animal-results" class="js-animal-results">
+
+			</div>
+		</section>
+
+	</div>
+
+	<script src="index.js"></script>
+</body>
+</html>

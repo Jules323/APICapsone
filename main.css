@@ -1,0 +1,8 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background: url("Backgrounds/AppBackground2.png") repeat-y fixed center;
+	background-size: 100%;
+}
