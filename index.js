@@ -24,7 +24,7 @@ function generateResultStrings(data) {
 	console.log(data);
 	return`
 		<br/>
-		<li class="js-GBIF">${data.scientificName}</li>
+		<li><a class="js-GBIF" href='#'>${data.scientificName}</a></li>
 		<br/>`
 }
 
@@ -77,8 +77,8 @@ function handleUserChoice() {
 		userChoice = searchTarget.text();
 		console.log(userChoice)
 		searchTarget.val(" ");
-		getREDListData1(userChoice, gatherAnimalData);
-		getRedListData2(userChoice, gatherAnimalData);
+		// getREDListData1(userChoice, gatherAnimalData);
+		// getRedListData2(userChoice, gatherAnimalData);
 		//getGettyPic(userChoice, gatherAnimalData);
 	});
 }
@@ -110,7 +110,7 @@ function handleUserChoice() {
 
 // hold call data until both have returned
 // use counter to trigger displayAnimalData
-function gatherAnimalData()
+// function gatherAnimalData()
 
 // function generateAnimalData()
 // // for both REDList and Getty or separate?
