@@ -3,6 +3,17 @@
 }
 
 body {
-	background: url("Backgrounds/AppBackground2.png") repeat-y fixed center;
-	background-size: 100%;
+	
 }
+
+.js-GBIF {
+	cursor: pointer;
+	color: blue;
+	text-decoration: underline;
+}
+
+li {
+	list-style-type: none;
+}
+
+
