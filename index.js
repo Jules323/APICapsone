@@ -2,7 +2,8 @@ const GBIF_API_URL = 'http://api.gbif.org/v1/species/search';
 let searchItem = "" ;
 let userChoice = "" ;
 const Getty_API_URL = 'https://api.gettyimages.com/v3/search/images';
-
+const REDList_API1_URL = `http://apiv3.iucnredlist.org/api/v3/species/narrative/${userChoice}`;
+const REDList_API2_URL = `http://apiv3.iucnredlist.org/api/v3/species/${userChoice}`;
 
 
 //GBIF API call to find the scientific name
@@ -24,7 +25,7 @@ function generateResultStrings(data) {
 	console.log(data);
 	return`
 		<br/>
-		<li><a class="js-GBIF" href='#'>${data.scientificName}</a></li>
+		<li class="js-GBIF"><a class="js-GBIF" href="#">${data.scientificName}</a></li>
 		<br/>`
 }
 
@@ -108,9 +109,10 @@ function handleUserChoice() {
 // })
 
 
-// hold call data until both have returned
-// use counter to trigger displayAnimalData
+
 // function gatherAnimalData()
+// // hold call data until both have returned
+// // use counter to trigger generateAnimalData
 
 // function generateAnimalData()
 // // for both REDList and Getty or separate?
