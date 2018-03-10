@@ -1,9 +1,6 @@
 const GBIF_API_URL = 'http://api.gbif.org/v1/species/search';
-let searchItem = "" ;
-let userChoice = "" ;
 const Getty_API_URL = 'https://api.gettyimages.com/v3/search/images';
-const REDList_API1_URL = `http://apiv3.iucnredlist.org/api/v3/species/narrative/${userChoice}`;
-const REDList_API2_URL = `http://apiv3.iucnredlist.org/api/v3/species/${userChoice}`;
+let searchItem = "" ;
 
 
 //GBIF API call to find the scientific name
@@ -23,14 +20,16 @@ function getGBIFData(searchString, callback) {
 //GBIF return items for user choice
 function generateResultStrings(data) {
 	console.log(data);
-	return`
-		<br/>
-		<li class="js-GBIF"><a class="js-GBIF" href="#">${data.scientificName}</a></li>
-		<br/>`
+	return `
+		<li>
+			<a class="js-GBIF" href="#">${data.scientificName}</a>
+			</br>
+			<span class="js-animal">${data.vernacularNames[0].vernacularName}</span>
+		</li>`
 }
 
 
-//maps results to html
+//results to html
 function displayGBIFData(data) {
 	console.log(data)
 	const GBIFresults = data.results.map((item) => generateResultStrings(item));
@@ -55,7 +54,24 @@ function handleSearchSubmit() {
 // // GBIF non-return search entry
 
 
+
+function handleUserChoice() {
+	$("#js-user-choice").on ('click', `.js-GBIF`, event => {
+		console.log('handleUserChoice ran')
+		const searchTarget = $(event.currentTarget);
+		let userChoice = searchTarget.text();
+		console.log(userChoice)
+		const commonName = searchTarget.closest('li').find('span').text();
+		searchTarget.val(" ");
+		getREDListData1(userChoice, gatherRed1Data);
+		getRedListData2(userChoice, gatherRed2Data);
+		getGettyPic(userChoice, commonName, gatherGettyData);
+	});
+}
+
+
 function getREDListData1(userChoice, callback) {
+	const REDList_API1_URL = `http://apiv3.iucnredlist.org/api/v3/species/narrative/${userChoice}` ;
 	const query2 = {
 		token: 'c6859a594d43701e167990e0de23ef01db373871586e01c6dcfeb6fa996f9fab' ,
 		};
@@ -63,7 +79,8 @@ function getREDListData1(userChoice, callback) {
 }
 
 
-function getRedListData2(searchName,callback) {
+function getRedListData2(userChoice, callback) {
+	const REDList_API2_URL = `http://apiv3.iucnredlist.org/api/v3/species/${userChoice}` ;
 	const query3 = {
 		token: 'c6859a594d43701e167990e0de23ef01db373871586e01c6dcfeb6fa996f9fab' ,
 		};
@@ -71,53 +88,81 @@ function getRedListData2(searchName,callback) {
 }
 
 
-function handleUserChoice() {
-	$("#js-user-choice").on ('click', `.js-GBIF`, event => {
-		console.log('handleUserChoice ran')
-		const searchTarget = $(event.currentTarget);
-		userChoice = searchTarget.text();
-		console.log(userChoice)
-		searchTarget.val(" ");
-		// getREDListData1(userChoice, gatherAnimalData);
-		// getRedListData2(userChoice, gatherAnimalData);
-		//getGettyPic(userChoice, gatherAnimalData);
-	});
+function getGettyPic(searchPhrase, commonName, callback) {
+	const settings = {
+		url: Getty_API_URL,
+		data: {
+			phrase: searchPhrase + " " + commonName ,
+			fields: 'id, title, preview, referral_destinations' ,
+			sort_order: 'most_popular' ,
+			page_size: '2' ,
+		},
+		dataType: 'json' ,
+		type: 'GET' ,
+		success: callback ,
+		headers: {
+		'API-Key': 'pe6mj7rne8urdbt5x7bwmff3' ,
+		},
+	};
+	$.ajax(settings);
 }
 
 
-// function getGettyPic(searchPhrase, callback) {
-// 	const settings = {
-// 		url: getty_API_URL,
-// 		data: {
-// 			phrase: `Arctictis binturong` ,
-// 			fields: 'id, title, preview, referral_destinations' ,
-// 			sort_order: 'most_popular' ,
-// 			page_size: '2' ,
-// 		},
-// 		dataType: 'json' ,
-// 		type: 'GET' ,
-// 		success: callback ,
-// 		headers: {
-// 		'API-Key': 'pe6mj7rne8urdbt5x7bwmff3' ,
-// 		},
-// 	};
-// 	$.ajax(settings);
-// }
-
-// getGettyPic('animal', data => {
-// 	console.log(data)
-// })
+let Red1Nar = null ;
+let Red2Spc = null ;
+let GettyPic = null ;
 
 
+//3 "gather" functions hold API returns
 
-// function gatherAnimalData()
-// // hold call data until both have returned
-// // use counter to trigger generateAnimalData
 
-// function generateAnimalData()
-// // for both REDList and Getty or separate?
+function gatherRed1Data(data) {
+	console.log('gatherRed1Data ran')
+	console.log(data)
+	Red1Nar = data;
+	hasAPICompleted();
+}
 
-// function displayAnimalData()
+
+function gatherRed2Data(data) {
+	console.log('gatherRed2Data ran')
+	console.log(data)
+	Red2Spc = data;
+	hasAPICompleted();
+}
+
+
+function gatherGettyData(data) {
+	console.log('gatherGettyData ran')
+	console.log(data)
+	GettyPic = data;
+	hasAPICompleted();
+}
+
+
+//verifies API returns
+function hasAPICompleted() {
+	if (Red1Nar && Red2Spc && GettyPic) {
+	console.log('All APIs returned')
+	displayAnimalDataBits(Red1Nar, Red2Spc, GettyPic);
+	}
+}
+
+
+//use the desired data from returns
+function displayAnimalDataBits(Red1Nar, Red2Spc, GettyPic) {
+	console.log('displayAnimalData ran')
+	const Pic = 
+	return `
+		<div class="js-habitat">${Red1Nar.result[0].habitat}</div>
+		<div class="js-threat">${Red1Nar.result[0].threats}</div>
+	`
+}
+
+
+
+
+
 
 
 function launchThreatAPI() {

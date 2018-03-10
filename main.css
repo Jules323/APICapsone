@@ -11,8 +11,12 @@ li {
 }
 
 a:focus {
-	color: #0000FF;
+	color: #ff0000;
 }
+
+.js-GBIF-hidden {
+	display: none;
+} 
 
 
 
