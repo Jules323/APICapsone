@@ -25,7 +25,7 @@ function generateResultStrings(data) {
 			<a class="js-GBIF" href="#">${data.scientificName}</a>
 			</br>
 			<span class="js-animal">${data.vernacularNames[0].vernacularName}</span>
-		</li>`
+		</li>`;
 }
 
 
@@ -147,22 +147,30 @@ function hasAPICompleted() {
 	displayAnimalDataBits(Red1Nar, Red2Spc, GettyPic);
 	}
 }
-
-
-//use the desired data from returns
-function displayAnimalDataBits(Red1Nar, Red2Spc, GettyPic) {
-	console.log('displayAnimalData ran')
-	const Pic = 
+// ??MAYBE A FOREACH LOOP FOR IMAGES??
+function generateAnimalInfo(pics, Red1Nar, Red2Spc) {
+	console.log(pics)
 	return `
+		<div class="js-pics">
+			<img src="${pics.display_sizes[0].uri}" class="js-pic1" alt="${pics.title}">
+			<img src="${pics.display_sizes[0].uri}" class="js-pic1" alt="${pics.title}">
+		</div>
+		<div class="js-catagory">${Red2Spc.result[0].category}</div>
+		<div class="js-population">${Red1Nar.result[0].populationtrend}</div>
+		<div class="js-geography">${Red1Nar.result[0].geographicrange}</div>
 		<div class="js-habitat">${Red1Nar.result[0].habitat}</div>
 		<div class="js-threat">${Red1Nar.result[0].threats}</div>
-	`
+		<div class="js-conserv">${Red1Nar.result[0].conservationmeasures}</div>
+		`;
 }
 
 
-
-
-
+function displayAnimalDataBits(Red1Nar, Red2Spc, GettyPic) {
+	//console.log('displayAnimalData ran')
+	console.log(GettyPic)
+	const bits = GettyPic.images.map((item) => generateAnimalInfo(item, Red1Nar, Red2Spc));
+	$('.js-animal-results').html(bits);
+}
 
 
 function launchThreatAPI() {
