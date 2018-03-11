@@ -35,6 +35,9 @@ function displayGBIFData(data) {
 	console.log('displayGBIFData ran')
 	const GBIFresults = data.results.map((item) => generateResultStrings(item));
 	$(".js-GBIF-results").html(GBIFresults);
+	$('ul').prepend(
+		`<h2 class="choice-list">Choose an animal</h2>
+		`);
 }
 
 
@@ -120,6 +123,7 @@ let GettyPic = null ;
 //3 "gather" functions hold API returns
 function gatherRed1Data(data) {
 	console.log('gatherRed1Data ran')
+	console.log(data)
 	Red1Nar = data;
 	hasAPICompleted();
 }
@@ -127,6 +131,7 @@ function gatherRed1Data(data) {
 
 function gatherRed2Data(data) {
 	console.log('gatherRed2Data ran')
+	console.log(data)
 	Red2Spc = data;
 	hasAPICompleted();
 }
@@ -134,6 +139,7 @@ function gatherRed2Data(data) {
 
 function gatherGettyData(data) {
 	console.log('gatherGettyData ran')
+	console.log(data)
 	GettyPic = data;
 	hasAPICompleted();
 }
@@ -146,7 +152,8 @@ function hasAPICompleted() {
 	displayAnimalBits(Red1Nar, Red2Spc, GettyPic);
 	}
 }
-// ??MAYBE A FOREACH LOOP FOR IMAGES??
+
+
 function generateAnimalInfo(pics) {
 	console.log('generateAnimalInfo ran')
 	return `
@@ -157,18 +164,79 @@ function generateAnimalInfo(pics) {
 }
 
 
+function getCategoryText(data) {
+	console.log('getCategoryText ran')
+	const category = `${Red2Spc.result[0].category}`;
+	if (category == "EX") {
+		return "Extinct";
+	}
+	else if (category == "EW") {
+		return "Extinct In The Wild";
+	}
+	else if (category == "CR") {
+		return "Critically Endangered";
+	}
+	else if (category == "EN") {
+		return "Endangered";
+	}
+	else if (category == "VU") {
+		return "Vunerable";
+	}
+	else if (category == "NT") {
+		return "Near Threatened";
+	}
+	else if (category == "LC") {
+		return "Least Concern";
+	}
+	else {
+		return "Not Evaluated/Data Deficient";
+	}
+}
+
+
 function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
-	//console.log('displayAnimalData ran')
 	console.log('displayAnimalBits ran')
 	const bits = GettyPic.images.map((item) => generateAnimalInfo(item));
 	$('.js-animal-results').html(bits);
+	const vuCategory = getCategoryText(Red2Spc);
+	$('.js-animal-results').prepend(
+		`
+		<div class="js-commonName">
+			<h3 class="js-commonName-title">YOUR ANIMAL</h3>
+			<div class"js-commonName-text">${Red2Spc.result[0].main_common_name}</div>
+		</div>
+		<div class="js-scienName">
+			<h3 class="js-scienName-title">SCIENTIFIC NAME</h3>
+			<div class="js-scienName-text">${Red2Spc.result[0].scientific_name}</div>
+		</div>
+		`);
 	$('.js-animal-results').append(
-		`<div class="js-catagory">${Red2Spc.result[0].category}</div>
-		 <div class="js-population">${Red1Nar.result[0].populationtrend}</div>
-		 <div class="js-geography">${Red1Nar.result[0].geographicrange}</div>
-		 <div class="js-habitat">${Red1Nar.result[0].habitat}</div>
-		 <div class="js-threat">${Red1Nar.result[0].threats}</div>
-		 <div class="js-conserv">${Red1Nar.result[0].conservationmeasures}</div>`);
+		`
+		<div class="js-category">
+		 	<h3 class="js-category-title">VUNERABILITY LEVEL</h3>
+			<div class="js-category-text">${vuCategory}</div>
+		</div>
+	 	<div class="js-population">
+			<h3 class="js-population-title">POPULATION TREND</h3>
+	 		<div class="js-population-text">${Red1Nar.result[0].populationtrend}</div>
+	 	</div>
+	 	<div class="js-geography">
+	 		<h3 class="js-geography-title">GEOGRAPHIC RANGE</h3>
+	 		<div class="js-geography-text">${Red1Nar.result[0].geographicrange}</div>
+	 	</div>
+	 	<div class="js-habitat">
+			<h3 class="js-habitat-title">HABITAT</h3>
+	 		<div class="js-habitat-text">${Red1Nar.result[0].habitat}</div>
+	 	</div>
+	 	<div class="js-threat">
+			<h3 class="js-threat-title">THREATS</h3>
+	 		<div class="js-threat-text">${Red1Nar.result[0].threats}</div>
+	 	</div>
+	 	<div class="js-conserv">
+			<h3 class="js-conserv-title">CONSERVATION MEASURES</h3>
+	 		<div class="js-conserve-text">${Red1Nar.result[0].conservationmeasures}</div>
+	 	</div>
+		`);
 }
 
 
