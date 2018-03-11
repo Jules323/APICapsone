@@ -5,6 +5,7 @@ let searchItem = "" ;
 
 //GBIF API call to find the scientific name
 function getGBIFData(searchString, callback) {
+	console.log('getGBIFData ran')
 	const query1 = {
 		q: `${searchString}` ,
 		limit: '5' ,
@@ -19,7 +20,7 @@ function getGBIFData(searchString, callback) {
 
 //GBIF return items for user choice
 function generateResultStrings(data) {
-	console.log(data);
+	console.log('generateResultStrings ran');
 	return `
 		<li>
 			<a class="js-GBIF" href="#">${data.scientificName}</a>
@@ -31,7 +32,7 @@ function generateResultStrings(data) {
 
 //results to html
 function displayGBIFData(data) {
-	console.log(data)
+	console.log('displayGBIFData ran')
 	const GBIFresults = data.results.map((item) => generateResultStrings(item));
 	$(".js-GBIF-results").html(GBIFresults);
 }
@@ -71,6 +72,7 @@ function handleUserChoice() {
 
 
 function getREDListData1(userChoice, callback) {
+	console.log('getREDListData1 ran')
 	const REDList_API1_URL = `http://apiv3.iucnredlist.org/api/v3/species/narrative/${userChoice}` ;
 	const query2 = {
 		token: 'c6859a594d43701e167990e0de23ef01db373871586e01c6dcfeb6fa996f9fab' ,
@@ -80,6 +82,7 @@ function getREDListData1(userChoice, callback) {
 
 
 function getRedListData2(userChoice, callback) {
+	console.log('getRedListData2 ran')
 	const REDList_API2_URL = `http://apiv3.iucnredlist.org/api/v3/species/${userChoice}` ;
 	const query3 = {
 		token: 'c6859a594d43701e167990e0de23ef01db373871586e01c6dcfeb6fa996f9fab' ,
@@ -89,6 +92,7 @@ function getRedListData2(userChoice, callback) {
 
 
 function getGettyPic(searchPhrase, commonName, callback) {
+	console.log('getGettyPic ran')
 	const settings = {
 		url: Getty_API_URL,
 		data: {
@@ -114,11 +118,8 @@ let GettyPic = null ;
 
 
 //3 "gather" functions hold API returns
-
-
 function gatherRed1Data(data) {
 	console.log('gatherRed1Data ran')
-	console.log(data)
 	Red1Nar = data;
 	hasAPICompleted();
 }
@@ -126,7 +127,6 @@ function gatherRed1Data(data) {
 
 function gatherRed2Data(data) {
 	console.log('gatherRed2Data ran')
-	console.log(data)
 	Red2Spc = data;
 	hasAPICompleted();
 }
@@ -134,7 +134,6 @@ function gatherRed2Data(data) {
 
 function gatherGettyData(data) {
 	console.log('gatherGettyData ran')
-	console.log(data)
 	GettyPic = data;
 	hasAPICompleted();
 }
@@ -144,32 +143,32 @@ function gatherGettyData(data) {
 function hasAPICompleted() {
 	if (Red1Nar && Red2Spc && GettyPic) {
 	console.log('All APIs returned')
-	displayAnimalDataBits(Red1Nar, Red2Spc, GettyPic);
+	displayAnimalBits(Red1Nar, Red2Spc, GettyPic);
 	}
 }
 // ??MAYBE A FOREACH LOOP FOR IMAGES??
-function generateAnimalInfo(pics, Red1Nar, Red2Spc) {
-	console.log(pics)
+function generateAnimalInfo(pics) {
+	console.log('generateAnimalInfo ran')
 	return `
 		<div class="js-pics">
-			<img src="${pics.display_sizes[0].uri}" class="js-pic1" alt="${pics.title}">
-			<img src="${pics.display_sizes[0].uri}" class="js-pic1" alt="${pics.title}">
+			<img src="${pics.display_sizes[0].uri}" class="js-pic" alt="${pics.title}">
 		</div>
-		<div class="js-catagory">${Red2Spc.result[0].category}</div>
-		<div class="js-population">${Red1Nar.result[0].populationtrend}</div>
-		<div class="js-geography">${Red1Nar.result[0].geographicrange}</div>
-		<div class="js-habitat">${Red1Nar.result[0].habitat}</div>
-		<div class="js-threat">${Red1Nar.result[0].threats}</div>
-		<div class="js-conserv">${Red1Nar.result[0].conservationmeasures}</div>
 		`;
 }
 
 
-function displayAnimalDataBits(Red1Nar, Red2Spc, GettyPic) {
+function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
 	//console.log('displayAnimalData ran')
-	console.log(GettyPic)
-	const bits = GettyPic.images.map((item) => generateAnimalInfo(item, Red1Nar, Red2Spc));
+	console.log('displayAnimalBits ran')
+	const bits = GettyPic.images.map((item) => generateAnimalInfo(item));
 	$('.js-animal-results').html(bits);
+	$('.js-animal-results').append(
+		`<div class="js-catagory">${Red2Spc.result[0].category}</div>
+		 <div class="js-population">${Red1Nar.result[0].populationtrend}</div>
+		 <div class="js-geography">${Red1Nar.result[0].geographicrange}</div>
+		 <div class="js-habitat">${Red1Nar.result[0].habitat}</div>
+		 <div class="js-threat">${Red1Nar.result[0].threats}</div>
+		 <div class="js-conserv">${Red1Nar.result[0].conservationmeasures}</div>`);
 }
 
 
