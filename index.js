@@ -1,8 +1,12 @@
 const citeBits = {
-	GBIFCite: 'GBIF:  The Global Biodiversity Information Facility (2018) What is GBIF?. Available from: https://www.gbif.org/what-is-gbif (3rd November 2016)',
-	RedListCite: 'Red List:  IUCN 2017. IUCN Red List of Threatened Species. Version 2017-3 http://www.iucnredlist.org',
-	GettyCite: 'All photo are courtesy of:  Getty Images, copyright © 2017. All rights reserved',
-	BackCite: "Animal mural background courtesy of Disney's Animal Kingdom, Rafiki's Planet Watch"
+	GBIFCite: 'GBIF:  The Global Biodiversity Information Facility (2018) What is GBIF?. Available from: ',
+	GBIFWeb: 'https://www.gbif.org/what-is-gbif',
+	RedListCite: 'Red List:  IUCN 2017. IUCN Red List of Threatened Species. Version 2017-3 ',
+	RedListWeb: 'http://www.iucnredlist.org',
+	GettyCite: 'All photo are courtesy of:  Getty Images, copyright © 2017. All rights reserved ',
+	GettyWeb: 'http://developers.gettyimages.com/en/',
+	BackCite: "Animal mural background courtesy of Disney's Animal Kingdom, Rafiki's Planet Watch ",
+	BackWeb: 'https://disneyworld.disney.go.com/attractions/animal-kingdom/conservation-station/'
 };
 const GBIF_API_URL = 'http://api.gbif.org/v1/species/search';
 const Getty_API_URL = 'https://api.gettyimages.com/v3/search/images';
@@ -259,10 +263,10 @@ function generateCiteStrings(item) {
 	return `
 			<div class="cite-area">
 				<h4 class="js-cite-title">Citations:</h4>
-				<p class="cite-text cite1">${item.GBIFCite}</p>
-				<p class="cite-text cite2">${item.RedListCite}</p>
-				<p class="cite-text cite3">${item.GettyCite}</p>
-				<p class="cite-text cite4">${item.BackCite}</p>
+				<p class="cite-text cite1">${item.GBIFCite}<a href=${item.GBIFWeb} class="cite-web" target="_blank">${item.GBIFWeb}</a></p>
+				<p class="cite-text cite2">${item.RedListCite}<a href=${item.RedListWeb} class="cite-web" target="_blank">${item.RedListWeb}</a></p>
+				<p class="cite-text cite3">${item.GettyCite}<a href=${item.GettyWeb} class="cite-web" target="_blank">${item.GettyWeb}</a></p>
+				<p class="cite-text cite4">${item.BackCite}<a href=${item.BackWeb} class="cite-web" target="_blank">${item.BackWeb}</a></p>
 			</div>
 	`;
 }
