@@ -1,6 +1,13 @@
+const citeBits = {
+	GBIFCite: 'GBIF:  The Global Biodiversity Information Facility (2018) What is GBIF?. Available from: https://www.gbif.org/what-is-gbif (3rd November 2016)',
+	RedListCite: 'Red List:  IUCN 2017. IUCN Red List of Threatened Species. Version 2017-3 http://www.iucnredlist.org',
+	GettyCite: 'All photo are courtesy of:  Getty Images, copyright © 2017. All rights reserved',
+	BackCite: "Animal mural background courtesy of Disney's Animal Kingdom, Rafiki's Planet Watch"
+};
 const GBIF_API_URL = 'http://api.gbif.org/v1/species/search';
 const Getty_API_URL = 'https://api.gettyimages.com/v3/search/images';
 let searchItem = "" ;
+const ShyPic = `<img src='images/CameraShy.png' class='js-pic'/>`;
 
 
 //GBIF API call to find the scientific name
@@ -21,12 +28,16 @@ function getGBIFData(searchString, callback) {
 //GBIF return items for user choice
 function generateResultStrings(data) {
 	console.log('generateResultStrings ran');
-	return `
-		<li>
-			<a class="js-GBIF" href="#">${data.scientificName}</a>
-			</br>
-			<span class="js-animal">${data.vernacularNames[0].vernacularName}</span>
-		</li>`;
+	try {
+		return `
+			<li>
+				<a class="js-GBIF" href="#">${data.scientificName}</a>
+				</br>
+				<span class="js-animal">${data.vernacularNames[0].vernacularName}</span>
+			</li>`;
+	} catch (e) {
+		return '' ;
+	}
 }
 
 
@@ -41,6 +52,8 @@ function displayGBIFData(data) {
 }
 
 
+// event listener for the form search
+// will fire the GBIF api request
 function handleSearchSubmit() {
 	$(".js-search-form").submit( function(event) {
 		event.preventDefault();
@@ -48,7 +61,8 @@ function handleSearchSubmit() {
 		const searchTarget = $(event.currentTarget).find('.js-query');
 		searchItem = searchTarget.val();
 		console.log(searchItem)
-		searchTarget.val(" ");
+		$(".js-animal-results").html('');
+		$(".js-citation").html('');
 		getGBIFData(searchItem, displayGBIFData);
 	});
 }
@@ -58,7 +72,8 @@ function handleSearchSubmit() {
 // // GBIF non-return search entry
 
 
-
+// event listener for the user's animal choice from the GBIF return
+// will fire the 2)Red List and Getty api requests
 function handleUserChoice() {
 	$("#js-user-choice").on ('click', `.js-GBIF`, event => {
 		console.log('handleUserChoice ran')
@@ -73,7 +88,7 @@ function handleUserChoice() {
 	});
 }
 
-
+// Red List narrative api call
 function getREDListData1(userChoice, callback) {
 	console.log('getREDListData1 ran')
 	const REDList_API1_URL = `http://apiv3.iucnredlist.org/api/v3/species/narrative/${userChoice}` ;
@@ -83,7 +98,7 @@ function getREDListData1(userChoice, callback) {
 	$.getJSON(REDList_API1_URL, query2, callback);
 }
 
-
+// Red List species api call
 function getRedListData2(userChoice, callback) {
 	console.log('getRedListData2 ran')
 	const REDList_API2_URL = `http://apiv3.iucnredlist.org/api/v3/species/${userChoice}` ;
@@ -94,6 +109,7 @@ function getRedListData2(userChoice, callback) {
 }
 
 
+// Getty pic api call
 function getGettyPic(searchPhrase, commonName, callback) {
 	console.log('getGettyPic ran')
 	const settings = {
@@ -102,7 +118,7 @@ function getGettyPic(searchPhrase, commonName, callback) {
 			phrase: searchPhrase + " " + commonName ,
 			fields: 'id, title, preview, referral_destinations' ,
 			sort_order: 'most_popular' ,
-			page_size: '2' ,
+			page_size: '1' ,
 		},
 		dataType: 'json' ,
 		type: 'GET' ,
@@ -115,6 +131,7 @@ function getGettyPic(searchPhrase, commonName, callback) {
 }
 
 
+// 3 variables for api callback data
 let Red1Nar = null ;
 let Red2Spc = null ;
 let GettyPic = null ;
@@ -154,8 +171,9 @@ function hasAPICompleted() {
 }
 
 
+// maps the Getty array return
 function generateAnimalInfo(pics) {
-	console.log('generateAnimalInfo ran')
+	console.log(pics)
 	return `
 		<div class="js-pics">
 			<img src="${pics.display_sizes[0].uri}" class="js-pic" alt="${pics.title}">
@@ -164,82 +182,151 @@ function generateAnimalInfo(pics) {
 }
 
 
+// determines which endangerment category
 function getCategoryText(data) {
 	console.log('getCategoryText ran')
 	const category = `${Red2Spc.result[0].category}`;
 	if (category == "EX") {
-		return "Extinct";
+		return `
+			<img src="images/extinct.png" alt="Extinct" class="badge" />
+		`;
 	}
 	else if (category == "EW") {
-		return "Extinct In The Wild";
+		return `
+			<img src="images/extinctWild.png" alt="Extinct In The wild" class="badge" />
+		`;
 	}
 	else if (category == "CR") {
-		return "Critically Endangered";
+		return `
+			<img src="images/criticallyEndangered.png" alt="Critically Endangered" class="badge" />
+		`;
 	}
 	else if (category == "EN") {
-		return "Endangered";
+		return `
+			<img src="images/Endangered.png" alt="Endangered" class="badge" />
+		`;
 	}
 	else if (category == "VU") {
-		return "Vunerable";
+		return `
+			<img src="images/Vunerable.png" alt="Vunerable" class="badge" />
+		`;
 	}
 	else if (category == "NT") {
-		return "Near Threatened";
+		return `
+			<img src="images/nearThreatened.png" alt="Near Threatened" class="badge" />
+		`;
 	}
 	else if (category == "LC") {
-		return "Least Concern";
+		return `
+			<img src="images/leastConcern.png" alt="Least Concern" class="badge" />
+		`;
 	}
 	else {
-		return "Not Evaluated/Data Deficient";
+		return `
+			<img src="images/Unknown.png" alt="Unknown/Data Deficient" class="badge" />
+		`;
 	}
 }
 
 
-function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
-	console.log('displayAnimalBits ran')
-	const bits = GettyPic.images.map((item) => generateAnimalInfo(item));
-	$('.js-animal-results').html(bits);
-	const vuCategory = getCategoryText(Red2Spc);
-	$('.js-animal-results').prepend(
-		`
-		<div class="js-commonName">
-			<h3 class="js-commonName-title">YOUR ANIMAL</h3>
-			<div class"js-commonName-text">${Red2Spc.result[0].main_common_name}</div>
-		</div>
-		<div class="js-scienName">
-			<h3 class="js-scienName-title">SCIENTIFIC NAME</h3>
-			<div class="js-scienName-text">${Red2Spc.result[0].scientific_name}</div>
-		</div>
-		`);
-	$('.js-animal-results').append(
-		`
-		<div class="js-category">
-		 	<h3 class="js-category-title">VUNERABILITY LEVEL</h3>
-			<div class="js-category-text">${vuCategory}</div>
-		</div>
-	 	<div class="js-population">
-			<h3 class="js-population-title">POPULATION TREND</h3>
-	 		<div class="js-population-text">${Red1Nar.result[0].populationtrend}</div>
-	 	</div>
-	 	<div class="js-geography">
-	 		<h3 class="js-geography-title">GEOGRAPHIC RANGE</h3>
-	 		<div class="js-geography-text">${Red1Nar.result[0].geographicrange}</div>
-	 	</div>
-	 	<div class="js-habitat">
-			<h3 class="js-habitat-title">HABITAT</h3>
-	 		<div class="js-habitat-text">${Red1Nar.result[0].habitat}</div>
-	 	</div>
-	 	<div class="js-threat">
-			<h3 class="js-threat-title">THREATS</h3>
-	 		<div class="js-threat-text">${Red1Nar.result[0].threats}</div>
-	 	</div>
-	 	<div class="js-conserv">
-			<h3 class="js-conserv-title">CONSERVATION MEASURES</h3>
-	 		<div class="js-conserve-text">${Red1Nar.result[0].conservationmeasures}</div>
-	 	</div>
-		`);
+function getPopulationText(data) {
+	console.log('getPopulationText ran')
+	const popData = `${Red1Nar.result[0].populationtrend}`;
+	if (popData == 'decreasing') {
+		return `
+				<p class="arrow">Decreasing<img src="images/redArrow.png" alt="Red arrow pointing down" /></p>
+			`;
+	}
+	else if (popData == 'increasing') {
+		return `
+			<p class="arrow">Increasing<img src="images/greenArrow.png" alt="Green arrow pointing up" /></p>
+		`;
+	}
+	else if (popData == 'stable') {
+		return `
+			<p class="arrow">Stable<img src="images/Stable.png" alt="Yellow bar indicating population stability" /></p>
+			`;
+	}
+	else {
+		return `
+		<p class="arrow">Unknown<img src="images/questionMark.png" alt="Question Mark" /></p>
+		`;
+	}
 }
 
 
+function generateCiteStrings(item) {
+	return `
+			<div class="cite-area">
+				<h4 class="js-cite-title">Citations:</h4>
+				<p class="cite-text cite1">${item.GBIFCite}</p>
+				<p class="cite-text cite2">${item.RedListCite}</p>
+				<p class="cite-text cite3">${item.GettyCite}</p>
+				<p class="cite-text cite4">${item.BackCite}</p>
+			</div>
+	`;
+}
+
+
+function displayCitation() {
+	let citationString = generateCiteStrings(citeBits);
+	$('.js-citation').html(citationString);
+}
+
+
+// renders Red List data and Getty pic
+function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
+	console.log('displayAnimalBits ran')
+	if (GettyPic.images.length == 0) {
+		GettyPic = ShyPic;
+		$('.js-animal-results').html(GettyPic);
+	}
+	else {
+	const bits = GettyPic.images.map((index) => generateAnimalInfo(index));
+	$('.js-animal-results').html(bits);
+	}
+	const vuCategory = getCategoryText(Red2Spc);
+	const popTrend = getPopulationText(Red1Nar);
+	$('.js-animal-results').append(
+		`
+		<div class="js-commonName">
+			<h3 class="js-title">YOUR ANIMAL</h3>
+			<div class="js-text">${Red2Spc.result[0].main_common_name}</div>
+		</div>
+		<div class="js-scienName">
+			<h3 class="js-title">SCIENTIFIC NAME</h3>
+			<div class="js-text">${Red2Spc.result[0].scientific_name}</div>
+		</div>
+		<div class="js-category">
+		 	<h3 class="js-title">VUNERABILITY LEVEL</h3>
+			<div class="js-text">${vuCategory}</div>
+		</div>
+	 	<div class="js-population">
+			<h3 class="js-title">POPULATION TREND</h3>
+	 		<div class="js-text">${popTrend}</div>
+	 	</div>
+	 	<div class="js-geography">
+	 		<h3 class="js-title">GEOGRAPHIC RANGE</h3>
+	 		<div class="js-text">${Red1Nar.result[0].geographicrange}</div>
+	 	</div>
+	 	<div class="js-habitat">
+			<h3 class="js-title">HABITAT</h3>
+	 		<div class="js-text">${Red1Nar.result[0].habitat}</div>
+	 	</div>
+	 	<div class="js-threat">
+			<h3 class="js-title">THREATS</h3>
+	 		<div class="js-text">${Red1Nar.result[0].threats}</div>
+	 	</div>
+	 	<div class="js-conserv">
+			<h3 class="js-title">CONSERVATION MEASURES</h3>
+	 		<div class="js-text">${Red1Nar.result[0].conservationmeasures}</div>
+	 	</div>
+		`);
+	displayCitation();
+}
+
+
+// master function
 function launchThreatAPI() {
 	handleSearchSubmit();
 	handleUserChoice();

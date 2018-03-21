@@ -6,17 +6,29 @@
 	<meta name="viewpoint" content="width=device-width">
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<link href="lity.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Oxygen:400,700" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 	<div class="container">
+		<header class="header">
+			<h1 class="app-name">Ark Check</h1>
+			<span class="sub-name sub-name-left">2 x 2,</span>
+			<span class="sub-name sub-name-center">1 | | </span>
+			<span class="sub-name sub-name-right">NONE</span>
+			<p class="app-explain">
+				Can you imagine a world without tigers, gorillas, or elephants? In the past 500 years, there have been nearly 1,000 species that have gone extinct. Perhaps one of the most striking elements of the present extinction crisis is the fact that 90% of primates,  are severely endangered. This group - monkeys, lemurs, orangutans, and apes - live in tropical forests which are fast disappearing. Overall, there are estimates that half the globe's 5,491 known mammal species are declining in population and are at risk of disappearing forever. In addition to primates, marine mammals -  including several species of whales, dolphins, and porpoises - are slipping quickly toward extinction.
+			</p>
+			<p class="app-explain">Want to find out more? Enter an animal into the search box below to find out about its habitat, geographic range, and whether it is endangered or not.
+			</p>
+	</header>
 
 		<main role="main">
 			<div class="js-search">
 				<form class="js-search-form">
 
-				<fieldset>mammal search</fieldset>
-					<legend>mammal search</legend>
+					<fieldset>Mammal Search</fieldset>
+					<legend>Mammal Search</legend>
 					<label for="query"></label>
 					<input id="mammal-search" type="text" class="js-query" placeholder="e.g. Elephant" required>
 					<button name="mammal-search" type="submit" class="js-search-btn">Search</button>
@@ -39,6 +51,12 @@
 			</div>
 		</section>
 
+		<section role="region">
+			<div id="Citation" class="js-citation">
+				
+			</div>
+		</section>
+		
 	</div>
 
 	<script src="index.js"></script>
