@@ -334,7 +334,8 @@ function generateCiteStrings(item) {
 				<p class="cite-text cite1">${item.GBIFCite}<a href=${item.GBIFWeb} class="cite-web" target="_blank">${item.GBIFWeb}</a></p>
 				<p class="cite-text cite2">${item.RedListCite}<a href=${item.RedListWeb} class="cite-web" target="_blank">${item.RedListWeb}</a></p>
 				<p class="cite-text cite3">${item.GettyCite}<a href=${item.GettyWeb} class="cite-web" target="_blank">${item.GettyWeb}</a></p>
-				<p class="cite-text cite4">${item.BackCite}<a href=${item.BackWeb} class="cite-web" target="_blank">${item.BackWeb}</a></p>
+				<p class="cite-text cite4">${item.BackCite}</p>
+				<a href=${item.BackWeb} class="cite-web" target="_blank">${item.BackWeb}</a>
 			</div>
 	`;
 }
