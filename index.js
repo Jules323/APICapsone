@@ -8,7 +8,7 @@ const citeBits = {
 	BackCite: "Animal mural background courtesy of Disney's Animal Kingdom, Rafiki's Planet Watch ",
 	BackWeb: 'https://disneyworld.disney.go.com/attractions/animal-kingdom/conservation-station/'
 };
-const GBIF_API_URL = 'http://api.gbif.org/v1/species/search';
+const GBIF_API_URL = 'https://api.gbif.org/v1/species/search';
 const Getty_API_URL = 'https://api.gettyimages.com/v3/search/images';
 let searchItem = "" ;
 const ShyPic = `<img src='images/CameraShy.png' alt='Boilerplate image for missing photo' class='js-pic'/>`;
