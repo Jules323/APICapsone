@@ -8,7 +8,7 @@ const citeBits = {
 	BackCite: "Animal mural background courtesy of Disney's Animal Kingdom, Rafiki's Planet Watch ",
 	BackWeb: 'https://disneyworld.disney.go.com/attractions/animal-kingdom/conservation-station/'
 };
-const GBIF_API_URL = 'https://api.gbif.org/v1/species/search';
+const GBIF_API_URL = 'http://api.gbif.org/v1/species/search';
 const Getty_API_URL = 'https://api.gettyimages.com/v3/search/images';
 let searchItem = "" ;
 const ShyPic = `<img src='images/CameraShy.png' alt='Boilerplate image for missing photo' class='js-pic'/>`;
@@ -128,7 +128,7 @@ function handleUserChoice() {
 // Red List narrative api call
 function getREDListData1(userChoice, callback) {
 	console.log('getREDListData1 ran')
-	const REDList_API1_URL = `https://crossorigin.me/http://apiv3.iucnredlist.org/api/v3/species/narrative/${userChoice}` ;
+	const REDList_API1_URL = `http://apiv3.iucnredlist.org/api/v3/species/narrative/${userChoice}` ;
 	const query2 = {
 		token: 'c6859a594d43701e167990e0de23ef01db373871586e01c6dcfeb6fa996f9fab' ,
 		};
@@ -138,7 +138,7 @@ function getREDListData1(userChoice, callback) {
 // Red List species api call
 function getRedListData2(userChoice, callback) {
 	console.log('getRedListData2 ran')
-	const REDList_API2_URL = `https://crossorigin.me/http://apiv3.iucnredlist.org/api/v3/species/${userChoice}` ;
+	const REDList_API2_URL = `http://apiv3.iucnredlist.org/api/v3/species/${userChoice}` ;
 	const query3 = {
 		token: 'c6859a594d43701e167990e0de23ef01db373871586e01c6dcfeb6fa996f9fab' ,
 		};
