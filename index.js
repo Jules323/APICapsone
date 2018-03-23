@@ -8,10 +8,24 @@ const citeBits = {
 	BackCite: "Animal mural background courtesy of Disney's Animal Kingdom, Rafiki's Planet Watch ",
 	BackWeb: 'https://disneyworld.disney.go.com/attractions/animal-kingdom/conservation-station/'
 };
-const GBIF_API_URL = 'http://api.gbif.org/v1/species/search';
+const GBIF_API_URL = 'https://api.gbif.org/v1/species/search';
 const Getty_API_URL = 'https://api.gettyimages.com/v3/search/images';
 let searchItem = "" ;
-const ShyPic = `<img src='images/CameraShy.png' class='js-pic'/>`;
+const ShyPic = `<img src='images/CameraShy.png' alt='Boilerplate image for missing photo' class='js-pic'/>`;
+const oopsImage = [
+				`<img src='images/OopsElephant.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
+				`<img src='images/OopsSeal.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
+				`<img src='images/OopsBushBaby.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
+				`<img src='images/OopsGiraffe.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
+				`<img src='images/OopsHippo.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
+				`<img src='images/OopsHowlerMonkey.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
+				`<img src='images/OopsLemur.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
+				`<img src='images/OopsLeopard.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
+				`<img src='images/OopsOtters.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
+				`<img src='images/OopsSloth.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
+				`<img src='images/OopsTiger.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
+				];
+const searchErr = `<img src='image/OopsSeal.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`;
 
 
 //GBIF API call to find the scientific name
@@ -47,12 +61,35 @@ function generateResultStrings(data) {
 
 //results to html
 function displayGBIFData(data) {
-	console.log('displayGBIFData ran')
+	console.log(data)
 	const GBIFresults = data.results.map((item) => generateResultStrings(item));
 	$(".js-GBIF-results").html(GBIFresults);
 	$('ul').prepend(
 		`<h2 class="choice-list">Choose an animal</h2>
 		`);
+}
+
+
+// GBIF non-return search entry
+function handleErrorEntry() {
+	shuffle(oopsImage);
+	const oopsMsg = oopsImage[0];
+$('.js-animal-results').html(oopsMsg);
+$('.js-animal-results').prepend(
+	`
+		<p class="js-error-msg">I am not an aminal! Please, enter a different search term.</p>
+	`);
+	displayCitation();
+	}
+
+
+function tryGBIFData(data) {
+if (data.results.length == 0) {
+		handleErrorEntry();
+	}
+	else {
+		displayGBIFData(data);
+	}	
 }
 
 
@@ -67,13 +104,9 @@ function handleSearchSubmit() {
 		console.log(searchItem)
 		$(".js-animal-results").html('');
 		$(".js-citation").html('');
-		getGBIFData(searchItem, displayGBIFData);
+		getGBIFData(searchItem, tryGBIFData);
 	});
 }
-
-
-// function handleErrorEntry()
-// // GBIF non-return search entry
 
 
 // event listener for the user's animal choice from the GBIF return
@@ -95,7 +128,7 @@ function handleUserChoice() {
 // Red List narrative api call
 function getREDListData1(userChoice, callback) {
 	console.log('getREDListData1 ran')
-	const REDList_API1_URL = `http://apiv3.iucnredlist.org/api/v3/species/narrative/${userChoice}` ;
+	const REDList_API1_URL = `https://crossorigin.me/http://apiv3.iucnredlist.org/api/v3/species/narrative/${userChoice}` ;
 	const query2 = {
 		token: 'c6859a594d43701e167990e0de23ef01db373871586e01c6dcfeb6fa996f9fab' ,
 		};
@@ -105,7 +138,7 @@ function getREDListData1(userChoice, callback) {
 // Red List species api call
 function getRedListData2(userChoice, callback) {
 	console.log('getRedListData2 ran')
-	const REDList_API2_URL = `http://apiv3.iucnredlist.org/api/v3/species/${userChoice}` ;
+	const REDList_API2_URL = `https://crossorigin.me/http://apiv3.iucnredlist.org/api/v3/species/${userChoice}` ;
 	const query3 = {
 		token: 'c6859a594d43701e167990e0de23ef01db373871586e01c6dcfeb6fa996f9fab' ,
 		};
@@ -141,7 +174,7 @@ let Red2Spc = null ;
 let GettyPic = null ;
 
 
-//3 "gather" functions hold API returns
+// 3 "gather" functions hold API returns
 function gatherRed1Data(data) {
 	console.log('gatherRed1Data ran')
 	console.log(data)
@@ -166,11 +199,43 @@ function gatherGettyData(data) {
 }
 
 
-//verifies API returns
+// verifies API returns
 function hasAPICompleted() {
 	if (Red1Nar && Red2Spc && GettyPic) {
 	console.log('All APIs returned')
-	displayAnimalBits(Red1Nar, Red2Spc, GettyPic);
+	testRedList(Red1Nar, Red2Spc, GettyPic);
+	}
+}
+
+
+function shuffle(bits) {
+  for (let a = bits.length - 1; a > 0; a--) {
+    let b = Math.floor(Math.random() * (a + 1));
+    [bits[a], bits[b]] = [bits[b], bits[a]];
+  }
+}
+
+
+// renders error message when Red List data is missing
+function displayMissingBits() {
+	shuffle(oopsImage);
+	const oopsMsg = oopsImage[0];
+$('.js-animal-results').html(oopsMsg);
+$('.js-animal-results').prepend(
+	`
+		<p class="js-error-msg">Hmmm, this animal has not been found in the database. Please, choose another animal from the list above or start a new search.</p>
+	`);
+	displayCitation();
+}
+
+
+// error handler for Red List API return
+function testRedList(Red1Nar, Red2Spc, GettyPic) {
+	if (Red1Nar.result.length == 0) {
+	displayMissingBits()
+	}
+	else {
+	displayAnimalBits(Red1Nar, Red2Spc, GettyPic)	 
 	}
 }
 
@@ -233,6 +298,7 @@ function getCategoryText(data) {
 }
 
 
+// determines population trend return
 function getPopulationText(data) {
 	console.log('getPopulationText ran')
 	const popData = `${Red1Nar.result[0].populationtrend}`;
@@ -259,10 +325,11 @@ function getPopulationText(data) {
 }
 
 
+// populates info in citation area
 function generateCiteStrings(item) {
 	return `
 			<div class="cite-area">
-				<h4 class="js-cite-title">Citations:</h4>
+				<h4 class="js-cite-title">Citations (and thanks to):</h4>
 				<p class="cite-text cite1">${item.GBIFCite}<a href=${item.GBIFWeb} class="cite-web" target="_blank">${item.GBIFWeb}</a></p>
 				<p class="cite-text cite2">${item.RedListCite}<a href=${item.RedListWeb} class="cite-web" target="_blank">${item.RedListWeb}</a></p>
 				<p class="cite-text cite3">${item.GettyCite}<a href=${item.GettyWeb} class="cite-web" target="_blank">${item.GettyWeb}</a></p>
@@ -272,6 +339,7 @@ function generateCiteStrings(item) {
 }
 
 
+// renders the citation area
 function displayCitation() {
 	let citationString = generateCiteStrings(citeBits);
 	$('.js-citation').html(citationString);
