@@ -3,7 +3,7 @@ const citeBits = {
 	GBIFWeb: 'https://www.gbif.org/what-is-gbif',
 	RedListCite: 'Red List:  IUCN 2017. IUCN Red List of Threatened Species. Version 2017-3 ',
 	RedListWeb: 'http://www.iucnredlist.org',
-	GettyCite: 'All photo are courtesy of:  Getty Images, copyright © 2017. All rights reserved ',
+	GettyCite: 'Photos are courtesy of:  Getty Images, copyright © 2017. All rights reserved ',
 	GettyWeb: 'http://developers.gettyimages.com/en/',
 	BackCite: "Animal mural background courtesy of Disney's Animal Kingdom, Rafiki's Planet Watch ",
 	BackWeb: 'https://disneyworld.disney.go.com/attractions/animal-kingdom/conservation-station/'
@@ -74,10 +74,11 @@ function displayGBIFData(data) {
 function handleErrorEntry() {
 	shuffle(oopsImage);
 	const oopsMsg = oopsImage[0];
+$('.js-GBIF-results').html("");
 $('.js-animal-results').html(oopsMsg);
 $('.js-animal-results').prepend(
 	`
-		<p class="js-error-msg">I am not an aminal! Please, enter a different search term.</p>
+		<p class="js-error-msg">I AM NOT AN ANIMAL! Please, enter a different search term.</p>
 	`);
 	displayCitation();
 	}
