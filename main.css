@@ -3,7 +3,7 @@
 }
 
 body {
-	max-width: 1200px;
+	max-width: 1000px;
 	height: 650px;
 	background-color: #000000;
 	background: url("images/AppBackground4.png") center;
@@ -77,6 +77,10 @@ header {
 	padding-top: 10px;
 }
 
+fieldset {
+	display: none;
+}
+
 legend {
 	display: block;
 	text-align: center;
@@ -124,6 +128,17 @@ h2 {
 	padding-top: 10px;
 }
 
+a {
+	color: #00aaff;
+	font-size: 20px;
+	font-weight: 400;
+	text-shadow: 1px 1px 0 #000;
+	letter-spacing: .75px;
+}
+
+a:focus {
+	color: #ff0000;
+} 
 
 .js-search {
 	width: 50%;
@@ -156,7 +171,7 @@ h2 {
 									 10px 7px 3px #000000;
 	-webkit-box-shadow: 4px 2px 6px #1f1f1f,
 										  10px 7px 3px #000000;
-	margin: 30px 130px 40px 20px;
+	margin: 40px 90px 40px 40px;
 }
 
 .js-title {
@@ -172,6 +187,8 @@ h2 {
 .js-animal {
 	display: block;
 	font-size: 18px;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .js-animal::first-letter {
@@ -181,7 +198,7 @@ h2 {
 
 .arrow img {
 	vertical-align: middle;
-	margin-left: 20px;
+	padding-left: 20px;
 }
 
 .badge {
@@ -220,21 +237,7 @@ h2 {
 	margin: 20px auto 40px auto;
 }
 
-a {
-	color: #00aaff;
-	font-size: 20px;
-	font-weight: 400;
-	text-shadow: 1px 1px 0 #000;
-	letter-spacing: .75px;
-}
 
-a:focus {
-	color: #ff0000;
-} 
-
-fieldset {
-	display: none;
-}
 
 .cite-area {
 	width: 75%;
