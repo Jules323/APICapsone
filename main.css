@@ -10,13 +10,13 @@ body {
 	background-attachment: fixed;
 	font-family: 'Oxygen', sans-serif;
 	color: #ffffff;
-	text-shadow: 1px 1px 0px #000000,
-							 2px 1px .5px #000000,
+	text-shadow: 1px 1px 0px #000000;
+							 /*2px 1px .5px #000000,
 							 1px 2px .75px #5d0a0a,
 							 2px 2px 1px #2c0c0c,
 							 1px 2px 2px #0f0f0f,
 							 2px 2px 3px #000000,
-							 2.5px 2.5px 4px #000000;
+							 2.5px 2.5px 4px #000000;*/
 	margin-left: auto;
 	margin-right: auto;
 	cursor:url(images/harambePointer.png) ,auto;
@@ -25,7 +25,7 @@ body {
 .container {
 	width: 100%;
 	min-height:600px;
-	background-color: rgba(125, 110, 110, 0.7);
+	background-color: rgba(100, 80, 80, 0.9);
 	border: hidden;
 	border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -236,8 +236,6 @@ a:focus {
 										  10px 7px 3px #000000;
 	margin: 20px auto 40px auto;
 }
-
-
 
 .cite-area {
 	width: 75%;
