@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="container">
-		<header class="header">
+		<header role="banner" aria-label="header" class="header">
 			<h1 class="app-name">Ark Check</h1>
 			<span class="sub-name sub-name-left">2 x 2,</span>
 			<span class="sub-name sub-name-center">1 | | </span>
@@ -22,36 +22,36 @@
 			</p>
 	</header>
 
-		<main role="main">
+		<main role="main" aria-label="main-content">
 			<div class="js-search">
-				<form class="js-search-form">
+				<form role="form" class="js-search-form">
 
-					<fieldset>
+					<fieldset role="group">
 						<legend>Mammal Search</legend>
 						<label for="query">Mammal Name</label>
 						<input id="query" type="text" class="js-query" placeholder="e.g. Elephant" required>
-						<button name="mammal-search" type="submit" class="js-search-btn">Search</button>
+						<button role="button" aria-label="search" name="mammal-search" type="submit" class="js-search-btn">Search</button>
 					</fieldset>
 
 				</form>
 			</div>
 		</main>
 
-		<section role="region">
+		<section role="region" aria-label="section-one">
 			<div id="GBIF-results">
-				<ul id="js-user-choice" class="js-GBIF-results">
+				<ul role="group" id="js-user-choice" class="js-GBIF-results">
 
 				</ul>
 			</div>	
 		</section>
 
-		<section role="region">
+		<section role="region" aria-label="section-two">
 			<div id="Animal-results" class="js-animal-results">
 
 			</div>
 		</section>
 
-		<section role="region">
+		<section role="region" aria-label="section-three">
 			<div id="Citation" class="js-citation">
 				
 			</div>

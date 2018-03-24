@@ -11,26 +11,25 @@ const citeBits = {
 const GBIF_API_URL = 'https://api.gbif.org/v1/species/search';
 const Getty_API_URL = 'https://api.gettyimages.com/v3/search/images';
 let searchItem = "" ;
-const ShyPic = `<img src='images/CameraShy.png' alt='Boilerplate image for missing photo' class='js-pic'/>`;
+const ShyPic = `<img src='images/CameraShy.png' alt='Composite image of animals covering their faces' class='js-pic'/>`;
 const oopsImage = [
-				`<img src='images/OopsElephant.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
-				`<img src='images/OopsSeal.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
-				`<img src='images/OopsBushBaby.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
-				`<img src='images/OopsGiraffe.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
-				`<img src='images/OopsHippo.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
-				`<img src='images/OopsHowlerMonkey.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
-				`<img src='images/OopsLemur.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
-				`<img src='images/OopsLeopard.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
-				`<img src='images/OopsOtters.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
-				`<img src='images/OopsSloth.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
-				`<img src='images/OopsTiger.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`,
+				`<img src='images/OopsElephant.jpg' alt="Image of a baby elephant" class='js-error-pic'/>`,
+				`<img src='images/OopsSeal.jpg' alt="Image of a baby seal" class='js-error-pic'/>`,
+				`<img src='images/OopsBushBaby.jpg' alt="Image of two bush babies" class='js-error-pic'/>`,
+				`<img src='images/OopsGiraffe.jpg' alt="Image of a baby giraffe" class='js-error-pic'/>`,
+				`<img src='images/OopsHippo.jpg' alt="Image of Fiona the baby hippo born at the Cincinnati, Ohio zoo" class='js-error-pic'/>`,
+				`<img src='images/OopsHowlerMonkey.jpg' alt="Image of a Howler monkey" class='js-error-pic'/>`,
+				`<img src='images/OopsLemur.jpg' alt="Image of a lemur" class='js-error-pic'/>`,
+				`<img src='images/OopsLeopard.jpg' alt="Image of a leopard" class='js-error-pic'/>`,
+				`<img src='images/OopsOtters.jpg' alt="Image of two otters floating on their backs" class='js-error-pic'/>`,
+				`<img src='images/OopsSloth.jpg' alt="Image of a sloth hanging upside down on a tree branch" class='js-error-pic'/>`,
+				`<img src='images/OopsTiger.jpg' alt="Image of a tiger" class='js-error-pic'/>`,
 				];
-const searchErr = `<img src='image/OopsSeal.jpg' alt="Boilerplate image for search term error" class='js-error-pic'/>`;
+
 
 
 //GBIF API call to find the scientific name
 function getGBIFData(searchString, callback) {
-	console.log('getGBIFData ran')
 	const query1 = {
 		q: `${searchString}` ,
 		limit: '5' ,
@@ -45,10 +44,9 @@ function getGBIFData(searchString, callback) {
 
 //GBIF return items for user choice
 function generateResultStrings(data) {
-	console.log('generateResultStrings ran');
 	try {
 		return `
-			<li>
+			<li role="listitem">
 				<a class="js-GBIF" href="#">${data.scientificName}</a>
 				</br>
 				<span class="js-animal">${data.vernacularNames[0].vernacularName}</span>
@@ -61,7 +59,6 @@ function generateResultStrings(data) {
 
 //results to html
 function displayGBIFData(data) {
-	console.log(data)
 	const GBIFresults = data.results.map((item) => generateResultStrings(item));
 	$(".js-GBIF-results").html(GBIFresults);
 	$('ul').prepend(
@@ -99,10 +96,8 @@ if (data.results.length == 0) {
 function handleSearchSubmit() {
 	$(".js-search-form").submit( function(event) {
 		event.preventDefault();
-		console.log('handleSubmit ran')
 		const searchTarget = $(event.currentTarget).find('.js-query');
 		searchItem = searchTarget.val();
-		console.log(searchItem)
 		$(".js-animal-results").html('');
 		$(".js-citation").html('');
 		getGBIFData(searchItem, tryGBIFData);
@@ -114,10 +109,8 @@ function handleSearchSubmit() {
 // will fire the 2)Red List and Getty api requests
 function handleUserChoice() {
 	$("#js-user-choice").on ('click', `.js-GBIF`, event => {
-		console.log('handleUserChoice ran')
 		const searchTarget = $(event.currentTarget);
 		let userChoice = searchTarget.text();
-		console.log(userChoice)
 		const commonName = searchTarget.closest('li').find('span').text();
 		searchTarget.val(" ");
 		getREDListData1(userChoice, gatherRed1Data);
@@ -128,7 +121,6 @@ function handleUserChoice() {
 
 // Red List narrative api call
 function getREDListData1(userChoice, callback) {
-	console.log('getREDListData1 ran')
 	const REDList_API1_URL = `https://cors-anywhere.herokuapp.com/http://apiv3.iucnredlist.org/api/v3/species/narrative/${userChoice}` ;
 	const query2 = {
 		token: 'c6859a594d43701e167990e0de23ef01db373871586e01c6dcfeb6fa996f9fab' ,
@@ -138,7 +130,6 @@ function getREDListData1(userChoice, callback) {
 
 // Red List species api call
 function getRedListData2(userChoice, callback) {
-	console.log('getRedListData2 ran')
 	const REDList_API2_URL = `https://cors-anywhere.herokuapp.com/http://apiv3.iucnredlist.org/api/v3/species/${userChoice}` ;
 	const query3 = {
 		token: 'c6859a594d43701e167990e0de23ef01db373871586e01c6dcfeb6fa996f9fab' ,
@@ -149,7 +140,6 @@ function getRedListData2(userChoice, callback) {
 
 // Getty pic api call
 function getGettyPic(searchPhrase, commonName, callback) {
-	console.log('getGettyPic ran')
 	const settings = {
 		url: Getty_API_URL,
 		data: {
@@ -177,24 +167,18 @@ let GettyPic = null ;
 
 // 3 "gather" functions hold API returns
 function gatherRed1Data(data) {
-	console.log('gatherRed1Data ran')
-	console.log(data)
 	Red1Nar = data;
 	hasAPICompleted();
 }
 
 
 function gatherRed2Data(data) {
-	console.log('gatherRed2Data ran')
-	console.log(data)
 	Red2Spc = data;
 	hasAPICompleted();
 }
 
 
 function gatherGettyData(data) {
-	console.log('gatherGettyData ran')
-	console.log(data)
 	GettyPic = data;
 	hasAPICompleted();
 }
@@ -203,12 +187,12 @@ function gatherGettyData(data) {
 // verifies API returns
 function hasAPICompleted() {
 	if (Red1Nar && Red2Spc && GettyPic) {
-	console.log('All APIs returned')
 	testRedList(Red1Nar, Red2Spc, GettyPic);
 	}
 }
 
 
+// shuffles the oopsImage array
 function shuffle(bits) {
   for (let a = bits.length - 1; a > 0; a--) {
     let b = Math.floor(Math.random() * (a + 1));
@@ -243,7 +227,6 @@ function testRedList(Red1Nar, Red2Spc, GettyPic) {
 
 // maps the Getty array return
 function generateAnimalInfo(pics) {
-	console.log(pics)
 	return `
 		<div class="js-pics">
 			<img src="${pics.display_sizes[0].uri}" class="js-pic" alt="${pics.title}">
@@ -254,7 +237,6 @@ function generateAnimalInfo(pics) {
 
 // determines which endangerment category
 function getCategoryText(data) {
-	console.log('getCategoryText ran')
 	const category = `${Red2Spc.result[0].category}`;
 	if (category == "EX") {
 		return `
@@ -301,7 +283,6 @@ function getCategoryText(data) {
 
 // determines population trend return
 function getPopulationText(data) {
-	console.log('getPopulationText ran')
 	const popData = `${Red1Nar.result[0].populationtrend}`;
 	if (popData == 'decreasing') {
 		return `
@@ -331,11 +312,11 @@ function generateCiteStrings(item) {
 	return `
 			<div class="cite-area">
 				<h4 class="js-cite-title">Citations (and thanks to):</h4>
-				<p class="cite-text cite1">${item.GBIFCite}<a href=${item.GBIFWeb} class="cite-web" target="_blank">${item.GBIFWeb}</a></p>
-				<p class="cite-text cite2">${item.RedListCite}<a href=${item.RedListWeb} class="cite-web" target="_blank">${item.RedListWeb}</a></p>
-				<p class="cite-text cite3">${item.GettyCite}<a href=${item.GettyWeb} class="cite-web" target="_blank">${item.GettyWeb}</a></p>
+				<p class="cite-text cite1">${item.GBIFCite}<a href=${item.GBIFWeb} class="cite-web" target="_blank" rel="noopener noreferrer">${item.GBIFWeb}</a></p>
+				<p class="cite-text cite2">${item.RedListCite}<a href=${item.RedListWeb} class="cite-web" target="_blank" rel="noopener noreferrer">${item.RedListWeb}</a></p>
+				<p class="cite-text cite3">${item.GettyCite}<a href=${item.GettyWeb} class="cite-web" target="_blank" rel="noopener noreferrer">${item.GettyWeb}</a></p>
 				<p class="cite-text cite4">${item.BackCite}</p>
-				<a href=${item.BackWeb} class="cite-web" target="_blank">${item.BackWeb}</a>
+				<a href=${item.BackWeb} class="cite-web" target="_blank" rel="noopener noreferrer">${item.BackWeb}</a>
 			</div>
 	`;
 }
@@ -350,7 +331,6 @@ function displayCitation() {
 
 // renders Red List data and Getty pic
 function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
-	console.log('displayAnimalBits ran')
 	if (GettyPic.images.length == 0) {
 		GettyPic = ShyPic;
 		$('.js-animal-results').html(GettyPic);
