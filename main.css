@@ -20,14 +20,14 @@ body {
 .container {
 	width: 100%;
 	min-height:600px;
-	background-color: rgba(90, 75, 75, 0.8);
+	background-color: rgba(70, 50, 50, 0.9);
 	border: hidden;
 	border-radius: 10px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
-	-moz-box-shadow: inset 0 0 10px 5px #565656;
-	-webkit-box-shadow: inset 0 0 10px 5px #565656;
-	box-shadow: inset 0 0 10px 5px #565656;
+	-moz-box-shadow: inset 2px 2px 14px 7px #675656;
+	-webkit-box-shadow: inset 2px 2px 14px 7px #675656;
+	box-shadow: inset 2px 2px 14px 7px #675656;
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: 60px;
@@ -173,7 +173,7 @@ a:focus {
 
 .js-title {
 	width: 180px;
-	font-size: 22px;
+	font-size: 20px;
 	border-bottom: 4px solid red;
 	padding-bottom: 4px;
 }
@@ -241,8 +241,7 @@ a:focus {
 	font-size: 12px;
 	font-style: italic;
 	font-weight: 300;
-	text-shadow: 2px 2px 3px #1f1f1f,
-							 2px 2px 4px #000000;
+	text-shadow: 2px 2px 4px #000000;
 	border-top: 1px double #770000;
 	margin: 60px auto 40px auto;
 	padding: 20px 10px 20px 30px;
@@ -252,8 +251,7 @@ a:focus {
 	font-size: 12px;
 	font-style: italic;
 	font-weight: 300;
-	text-shadow: 2px 2px 3px #1f1f1f,
-							 2px 2px 4px #000000;
+	text-shadow: 2px 2px 4px #000000;
 	margin-left: 5px;
 }
 
