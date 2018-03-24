@@ -78,13 +78,17 @@ header {
 }
 
 fieldset {
-	display: none;
+	border: none;
 }
 
 legend {
 	display: block;
 	text-align: center;
 	font-size: 1.5em;
+}
+
+label {
+	display: none;
 }
 
 input {
