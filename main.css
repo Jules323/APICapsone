@@ -189,6 +189,8 @@ a:focus {
 .display-btn {
 	width: 15px;
 	height: 15px;
+	font-size: 1px;
+	color: #dddddd;
 	background-image: url("images/downArrow.png");
 	background-color: #dddddd;
 	float: left;

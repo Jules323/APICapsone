@@ -361,19 +361,19 @@ function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
 		 		<div class="js-info">${popTrend}</div>
 		 	</div>
 		 	<div class="js-geography">
-		 		<h3 class="js-title"><button type="button" class="display-btn"></button>GEOGRAPHIC RANGE</h3>
+		 		<h3 class="js-title"><button type="button" aria-label="button to expand or collapse geographic information" class="display-btn">READ</button>GEOGRAPHIC RANGE</h3>
 		 		<div class="js-info collapse">${Red1Nar.result[0].geographicrange}</div>
 		 	</div>
 		 	<div class="js-habitat">
-				<h3 class="js-title"><button type="button" class="display-btn"></button>HABITAT</h3>
+				<h3 class="js-title"><button type="button" aria-label="button to expand or collapse habitat information" class="display-btn">READ</button>HABITAT</h3>
 		 		<div class="js-info collapse">${Red1Nar.result[0].habitat}</div>
 		 	</div>
 		 	<div class="js-threats">
-				<h3 class="js-title"><button type="button" class="display-btn"></button>THREATS</h3>
+				<h3 class="js-title"><button type="button" aria-label="button to expand or collapse threat information" class="display-btn">READ</button>THREATS</h3>
 		 		<div class="js-info collapse">${Red1Nar.result[0].threats}</div>
 		 	</div>
 		 	<div class="js-conserv">
-				<h3 class="js-title"><button type="button" class="display-btn"></button>CONSERVATION MEASURES</h3>
+				<h3 class="js-title"><button type="button" aria-label="button to expand or collapse conservation information" class="display-btn">READ</button>CONSERVATION MEASURES</h3>
 		 		<div class="js-info collapse">${Red1Nar.result[0].conservationmeasures}</div>
 		 	</div>
 		`);
