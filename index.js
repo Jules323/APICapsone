@@ -383,7 +383,7 @@ function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
 
 function showText() {
 	$('.js-animal-results').on('click', function() {
-			$(event.target).closest('div').find('p').slideToggle('collapse');
+			$(event.target).closest('div').find('p').toggleClass('collapse');
 		event.preventDefault();
 	});
 }

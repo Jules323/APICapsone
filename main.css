@@ -161,6 +161,7 @@ a:focus {
 
 .js-pic {
 	max-width: 60%;
+	max-height: 420px;
 	float: right;
 	box-shadow: 4px 2px 6px #1f1f1f,
 							10px 7px 3px #000000;
@@ -174,13 +175,14 @@ a:focus {
 .js-title {
 	width: 250px;
 	font-size: 16px;
-	border-bottom: 3px solid #ff0000;
+	border-bottom: 2px solid #ff0000;
 	padding-bottom: 4px;
 	margin-bottom: 5px;
 }
 
 .js-info {
 	font-size: 16px;
+	padding-left: 5px;
 	margin-bottom: 10px;
 }
 
@@ -190,13 +192,29 @@ a:focus {
 	background-image: url("images/downArrow.png");
 	background-color: #dddddd;
 	float: left;
-	margin-right: 15px;
+	margin-left: 3px;
+	margin-right: 10px;
 	margin-top: 5px;
 }
 
 .collapse {
 	display: none;
-	transition: 600;
+}
+
+html .collapse {
+	display: none;
+}
+
+.collapse +ol {
+	display: none;
+}
+
+.collapse +ul {
+	display: none;
+}
+
+.collapse +li {
+	display: none;
 }
 
 .js-animal {
