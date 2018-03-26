@@ -119,6 +119,7 @@ function handleUserChoice() {
 	});
 }
 
+
 // Red List narrative api call
 function getREDListData1(userChoice, callback) {
 	const REDList_API1_URL = `https://cors-anywhere.herokuapp.com/http://apiv3.iucnredlist.org/api/v3/species/narrative/${userChoice}` ;
@@ -343,47 +344,57 @@ function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
 	const popTrend = getPopulationText(Red1Nar);
 	$('.js-animal-results').append(
 		`
-		<div class="js-commonName">
-			<h3 class="js-title">YOUR ANIMAL</h3>
-			<div class="js-text">${Red2Spc.result[0].main_common_name}</div>
-		</div>
-		<div class="js-scienName">
-			<h3 class="js-title">SCIENTIFIC NAME</h3>
-			<div class="js-text">${Red2Spc.result[0].scientific_name}</div>
-		</div>
-		<div class="js-category">
-		 	<h3 class="js-title">VUNERABILITY LEVEL</h3>
-			<div class="js-text">${vuCategory}</div>
-		</div>
-	 	<div class="js-population">
-			<h3 class="js-title">POPULATION TREND</h3>
-	 		<div class="js-text">${popTrend}</div>
-	 	</div>
-	 	<div class="js-geography">
-	 		<h3 class="js-title">GEOGRAPHIC RANGE</h3>
-	 		<div class="js-text">${Red1Nar.result[0].geographicrange}</div>
-	 	</div>
-	 	<div class="js-habitat">
-			<h3 class="js-title">HABITAT</h3>
-	 		<div class="js-text">${Red1Nar.result[0].habitat}</div>
-	 	</div>
-	 	<div class="js-threat">
-			<h3 class="js-title">THREATS</h3>
-	 		<div class="js-text">${Red1Nar.result[0].threats}</div>
-	 	</div>
-	 	<div class="js-conserv">
-			<h3 class="js-title">CONSERVATION MEASURES</h3>
-	 		<div class="js-text">${Red1Nar.result[0].conservationmeasures}</div>
-	 	</div>
+			<div class="js-commonName">
+				<h3 class="js-title">YOUR ANIMAL</h3>
+				<div class="js-info">${Red2Spc.result[0].main_common_name}</div>
+			</div>
+			<div class="js-scienName">
+				<h3 class="js-title">SCIENTIFIC NAME</h3>
+				<div class="js-info">${Red2Spc.result[0].scientific_name}</div>
+			</div>
+			<div class="js-category">
+			 	<h3 class="js-title">VUNERABILITY LEVEL</h3>
+				<div class="js-info">${vuCategory}</div>
+			</div>
+		 	<div class="js-population">
+				<h3 class="js-title">POPULATION TREND</h3>
+		 		<div class="js-info">${popTrend}</div>
+		 	</div>
+		 	<div class="js-geography">
+		 		<h3 class="js-title"><button type="button" class="display-btn"></button>GEOGRAPHIC RANGE</h3>
+		 		<p class="js-info collapse">${Red1Nar.result[0].geographicrange}</p>
+		 	</div>
+		 	<div class="js-habitat">
+				<h3 class="js-title"><button type="button" class="display-btn"></button>HABITAT</h3>
+		 		<p class="js-info collapse">${Red1Nar.result[0].habitat}</p>
+		 	</div>
+		 	<div class="js-threats">
+				<h3 class="js-title"><button type="button" class="display-btn"></button>THREATS</h3>
+		 		<p class="js-info collapse">${Red1Nar.result[0].threats}</p>
+		 	</div>
+		 	<div class="js-conserv">
+				<h3 class="js-title"><button type="button" class="display-btn"></button>CONSERVATION MEASURES</h3>
+		 		<p class="js-info collapse">${Red1Nar.result[0].conservationmeasures}</p>
+		 	</div>
 		`);
 	displayCitation();
 }
+
+
+function showText() {
+	$('.js-animal-results').on('click', function() {
+			$(event.target).closest('div').find('p').slideToggle('collapse');
+		event.preventDefault();
+	});
+}
+
 
 
 // master function
 function launchThreatAPI() {
 	handleSearchSubmit();
 	handleUserChoice();
+	showText();
 }
 
 

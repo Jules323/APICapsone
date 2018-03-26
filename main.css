@@ -14,7 +14,6 @@ body {
 							 2px 2px 1px #2c0c0c;
 	margin-left: auto;
 	margin-right: auto;
-	cursor:url(images/harambePointer.png) ,auto;
 }
 
 .container {
@@ -62,7 +61,7 @@ header {
 
 .app-explain {
 	width: 80%;
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: 300;
 	word-spacing: 3px;
 	line-height: 1.3em;
@@ -120,13 +119,14 @@ ul {
 }
 
 h2 {
+	font-size: 1.25em;
 	margin: 10px auto;
 	padding-top: 10px;
 }
 
 a {
 	color: #44ffff;
-	font-size: 22px;
+	font-size: 18px;
 	font-weight: 700;
 	text-shadow: 1px 1px 0 #000;
 	letter-spacing: .75px;
@@ -168,25 +168,41 @@ a:focus {
 									 10px 7px 3px #000000;
 	-webkit-box-shadow: 4px 2px 6px #1f1f1f,
 										  10px 7px 3px #000000;
-	margin: 40px 90px 40px 40px;
+	margin: 40px 20px 40px 80px;
 }
 
 .js-title {
-	width: 180px;
-	font-size: 20px;
-	border-bottom: 4px solid red;
+	width: 250px;
+	font-size: 16px;
+	border-bottom: 3px solid #ff0000;
 	padding-bottom: 4px;
+	margin-bottom: 5px;
 }
 
-.js-text {
-	font-size: 20px;
-	padding-bottom: 30px;
+.js-info {
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+
+.display-btn {
+	width: 15px;
+	height: 15px;
+	background-image: url("images/downArrow.png");
+	background-color: #dddddd;
+	float: left;
+	margin-right: 15px;
+	margin-top: 5px;
+}
+
+.collapse {
+	display: none;
+	transition: 600;
 }
 
 .js-animal {
 	display: block;
 	font-size: 18px;
-	padding-bottom: 10px;
+	padding-top: 5px;
 	margin-bottom: 10px;
 }
 
@@ -213,7 +229,8 @@ a:focus {
 									6px 6px 5px -1px #000000;
 	-webkit-box-shadow: 2px 2px 2px 3px #1f1f1f,
 										 6px 6px 5px -1px #000000;
-	margin-left: 15px;
+	margin-top: 15px;
+	margin-left: 50px;
 }
 
 .js-error-msg {
