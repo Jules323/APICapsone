@@ -362,19 +362,19 @@ function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
 		 	</div>
 		 	<div class="js-geography">
 		 		<h3 class="js-title"><button type="button" class="display-btn"></button>GEOGRAPHIC RANGE</h3>
-		 		<p class="js-info collapse">${Red1Nar.result[0].geographicrange}</p>
+		 		<div class="js-info collapse">${Red1Nar.result[0].geographicrange}</div>
 		 	</div>
 		 	<div class="js-habitat">
 				<h3 class="js-title"><button type="button" class="display-btn"></button>HABITAT</h3>
-		 		<p class="js-info collapse">${Red1Nar.result[0].habitat}</p>
+		 		<div class="js-info collapse">${Red1Nar.result[0].habitat}</div>
 		 	</div>
 		 	<div class="js-threats">
 				<h3 class="js-title"><button type="button" class="display-btn"></button>THREATS</h3>
-		 		<p class="js-info collapse">${Red1Nar.result[0].threats}</p>
+		 		<div class="js-info collapse">${Red1Nar.result[0].threats}</div>
 		 	</div>
 		 	<div class="js-conserv">
 				<h3 class="js-title"><button type="button" class="display-btn"></button>CONSERVATION MEASURES</h3>
-		 		<p class="js-info collapse">${Red1Nar.result[0].conservationmeasures}</p>
+		 		<div class="js-info collapse">${Red1Nar.result[0].conservationmeasures}</div>
 		 	</div>
 		`);
 	displayCitation();
@@ -383,7 +383,7 @@ function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
 
 function showText() {
 	$('.js-animal-results').on('click', function() {
-			$(event.target).closest('div').find('p').toggleClass('collapse');
+			$(event.target).closest('div').find('div').slideToggle('collapse');
 		event.preventDefault();
 	});
 }
