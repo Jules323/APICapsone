@@ -169,19 +169,19 @@ a:focus {
 									 10px 7px 3px #000000;
 	-webkit-box-shadow: 4px 2px 6px #1f1f1f,
 										  10px 7px 3px #000000;
-	margin: 40px 20px 40px 80px;
+	margin: 40px 20px 40px 90px;
 }
 
 .js-title {
 	width: 250px;
-	font-size: 16px;
+	font-size: 18px;
 	border-bottom: 2px solid #ff0000;
 	padding-bottom: 4px;
 	margin-bottom: 5px;
 }
 
 .js-info {
-	font-size: 16px;
+	font-size: 18px;
 	padding-left: 5px;
 	margin-bottom: 10px;
 }

@@ -81,6 +81,7 @@ $('.js-animal-results').prepend(
 	}
 
 
+// verifies whether GBIF data is useable
 function tryGBIFData(data) {
 if (data.results.length == 0) {
 		handleErrorEntry();
@@ -109,6 +110,7 @@ function handleSearchSubmit() {
 // will fire the 2)Red List and Getty api requests
 function handleUserChoice() {
 	$("#js-user-choice").on ('click', `.js-GBIF`, event => {
+		event.preventDefault();
 		const searchTarget = $(event.currentTarget);
 		let userChoice = searchTarget.text();
 		const commonName = searchTarget.closest('li').find('span').text();
@@ -128,6 +130,7 @@ function getREDListData1(userChoice, callback) {
 		};
 	$.getJSON(REDList_API1_URL, query2, callback);
 }
+
 
 // Red List species api call
 function getRedListData2(userChoice, callback) {
@@ -236,7 +239,7 @@ function generateAnimalInfo(pics) {
 }
 
 
-// determines which endangerment category
+// determines which endangerment category badge to display
 function getCategoryText(data) {
 	const category = `${Red2Spc.result[0].category}`;
 	if (category == "EX") {
@@ -381,6 +384,7 @@ function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
 }
 
 
+// expand & collapse funcionality for large text returns
 function showText() {
 	$('.js-animal-results').on('click', function() {
 			$(event.target).closest('div').find('div').slideToggle('collapse');
