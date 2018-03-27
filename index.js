@@ -313,11 +313,11 @@ function generateCiteStrings(item) {
 	return `
 			<div class="cite-area">
 				<h4 class="js-cite-title">Citations (and thanks to):</h4>
-				<p class="cite-text cite1">${item.GBIFCite}<a href=${item.GBIFWeb} class="cite-web" target="_blank" rel="noopener noreferrer">${item.GBIFWeb}</a></p>
-				<p class="cite-text cite2">${item.RedListCite}<a href=${item.RedListWeb} class="cite-web" target="_blank" rel="noopener noreferrer">${item.RedListWeb}</a></p>
-				<p class="cite-text cite3">${item.GettyCite}<a href=${item.GettyWeb} class="cite-web" target="_blank" rel="noopener noreferrer">${item.GettyWeb}</a></p>
+				<p class="cite-text cite1">${item.GBIFCite}<a href=${item.GBIFWeb} aria-label="link to Global Biodiversity Information Facility site" class="cite-web" target="_blank" rel="noopener noreferrer">${item.GBIFWeb}</a></p>
+				<p class="cite-text cite2">${item.RedListCite}<a href=${item.RedListWeb} aria-label="link to Red List web page" class="cite-web" target="_blank" rel="noopener noreferrer">${item.RedListWeb}</a></p>
+				<p class="cite-text cite3">${item.GettyCite}<a href=${item.GettyWeb} aria-label="link to Getty Images Developer site" class="cite-web" target="_blank" rel="noopener noreferrer">${item.GettyWeb}</a></p>
 				<p class="cite-text cite4">${item.BackCite}</p>
-				<a href=${item.BackWeb} class="cite-web" target="_blank" rel="noopener noreferrer">${item.BackWeb}</a>
+				<a href=${item.BackWeb} aria-label="link to Disney's Animal Kingdom Rafiki's Planet Watch site" class="cite-web" target="_blank" rel="noopener noreferrer">${item.BackWeb}</a>
 			</div>
 	`;
 }
