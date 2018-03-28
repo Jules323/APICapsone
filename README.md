@@ -2,7 +2,7 @@ Ark Check
 
 API Capstone Project for Thinkful
 
-This application utilizes three source databases to search for the endangered status of mammals. The user may search by an animal's common name, scientific name, or by genus only to see results of related mammals.
+This application utilizes three source databases to search for the endangered status of mammals. The user may search by an animal's common name, scientific name, or by genus to see results of related mammals.
 
 
 API calls:
