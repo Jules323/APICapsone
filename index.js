@@ -106,6 +106,15 @@ function handleSearchSubmit() {
 }
 
 
+// 1.25s wait to scroll to information return
+function scrollToDiv() {
+    $("html, body").delay(1250).animate(
+    {
+      scrollTop: $('#Animal-results').offset().top
+    }, 500);
+ }
+
+
 // event listener for the user's animal choice from the GBIF return
 // will fire the 2)Red List and Getty api requests
 function handleUserChoice() {
@@ -118,6 +127,7 @@ function handleUserChoice() {
 		getREDListData1(userChoice, gatherRed1Data);
 		getRedListData2(userChoice, gatherRed2Data);
 		getGettyPic(userChoice, commonName, gatherGettyData);
+		scrollToDiv();
 	});
 }
 
@@ -127,7 +137,7 @@ function getREDListData1(userChoice, callback) {
 	const REDList_API1_URL = `https://cors-anywhere.herokuapp.com/http://apiv3.iucnredlist.org/api/v3/species/narrative/${userChoice}` ;
 	const query2 = {
 		token: 'c6859a594d43701e167990e0de23ef01db373871586e01c6dcfeb6fa996f9fab' ,
-		};
+	};
 	$.getJSON(REDList_API1_URL, query2, callback);
 }
 
@@ -137,7 +147,7 @@ function getRedListData2(userChoice, callback) {
 	const REDList_API2_URL = `https://cors-anywhere.herokuapp.com/http://apiv3.iucnredlist.org/api/v3/species/${userChoice}` ;
 	const query3 = {
 		token: 'c6859a594d43701e167990e0de23ef01db373871586e01c6dcfeb6fa996f9fab' ,
-		};
+	};
 	$.getJSON(REDList_API2_URL, query3, callback);	
 }
 
@@ -156,7 +166,7 @@ function getGettyPic(searchPhrase, commonName, callback) {
 		type: 'GET' ,
 		success: callback ,
 		headers: {
-		'API-Key': 'pe6mj7rne8urdbt5x7bwmff3' ,
+			'API-Key': 'pe6mj7rne8urdbt5x7bwmff3' ,
 		},
 	};
 	$.ajax(settings);
@@ -191,7 +201,7 @@ function gatherGettyData(data) {
 // verifies API returns
 function hasAPICompleted() {
 	if (Red1Nar && Red2Spc && GettyPic) {
-	testRedList(Red1Nar, Red2Spc, GettyPic);
+		testRedList(Red1Nar, Red2Spc, GettyPic);
 	}
 }
 
@@ -209,11 +219,12 @@ function shuffle(bits) {
 function displayMissingBits() {
 	shuffle(oopsImage);
 	const oopsMsg = oopsImage[0];
-$('.js-animal-results').html(oopsMsg);
-$('.js-animal-results').prepend(
-	`
-		<p class="js-error-msg">Hmmm, this animal has not been found in the database. Please, choose another animal from the list above or start a new search.</p>
-	`);
+	$('.js-animal-results').html(oopsMsg);
+	$('.js-animal-results').prepend(
+		`
+			<p class="js-error-msg">Hmmm, this animal has not been found in the database. Please, choose another animal from the list above or start a new search.</p>
+		`
+	);
 	displayCitation();
 }
 
@@ -221,10 +232,10 @@ $('.js-animal-results').prepend(
 // error handler for Red List API return
 function testRedList(Red1Nar, Red2Spc, GettyPic) {
 	if (Red1Nar.result.length == 0) {
-	displayMissingBits()
+		displayMissingBits()
 	}
 	else {
-	displayAnimalBits(Red1Nar, Red2Spc, GettyPic)	 
+		displayAnimalBits(Red1Nar, Red2Spc, GettyPic)	 
 	}
 }
 
@@ -348,7 +359,7 @@ function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
 	$('.js-animal-results').append(
 		`
 			<div class="js-commonName">
-				<h3 class="js-title">YOUR ANIMAL</h3>
+				<h3 class="js-title js-first-title">YOUR ANIMAL</h3>
 				<div class="js-info">${Red2Spc.result[0].main_common_name}</div>
 			</div>
 			<div class="js-scienName">
@@ -387,11 +398,10 @@ function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
 // expand & collapse funcionality for large text returns
 function showText() {
 	$('.js-animal-results').on('click', function() {
-			$(event.target).closest('div').find('div').slideToggle('collapse');
+			$(event.target).closest('div').find('.js-info').slideToggle('collapse');
 		event.preventDefault();
 	});
 }
-
 
 
 // master function

@@ -180,6 +180,10 @@ a:focus {
 	margin-bottom: 5px;
 }
 
+.js-first-title {
+	padding-top: 30px;
+}
+
 .js-info {
 	font-size: 18px;
 	padding-left: 5px;
