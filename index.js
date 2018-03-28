@@ -108,7 +108,7 @@ function handleSearchSubmit() {
 
 // 1.25s wait to scroll to information return
 function scrollToDiv() {
-    $("html, body").delay(1250).animate(
+    $("html, body").animate(
     {
       scrollTop: $('#Animal-results').offset().top
     }, 500);
@@ -127,7 +127,6 @@ function handleUserChoice() {
 		getREDListData1(userChoice, gatherRed1Data);
 		getRedListData2(userChoice, gatherRed2Data);
 		getGettyPic(userChoice, commonName, gatherGettyData);
-		scrollToDiv();
 	});
 }
 
@@ -237,6 +236,7 @@ function testRedList(Red1Nar, Red2Spc, GettyPic) {
 	else {
 		displayAnimalBits(Red1Nar, Red2Spc, GettyPic)	 
 	}
+	scrollToDiv();
 }
 
 
@@ -398,7 +398,7 @@ function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
 
 // expand & collapse funcionality for large text returns
 function showText() {
-	$('.js-animal-results').on('click', function() {
+	$('.js-animal-results').on('click', function(event) {
 		$(event.target).closest('div').find('.js-info').slideToggle('collapse');
 		event.preventDefault();
 	});
