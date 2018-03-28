@@ -106,7 +106,7 @@ function handleSearchSubmit() {
 }
 
 
-// 1.25s wait to scroll to information return
+// scroll to information return
 function scrollToDiv() {
     $("html, body").animate(
     {
