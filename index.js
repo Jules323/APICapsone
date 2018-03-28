@@ -10,7 +10,6 @@ const citeBits = {
 };
 const GBIF_API_URL = 'https://api.gbif.org/v1/species/search';
 const Getty_API_URL = 'https://api.gettyimages.com/v3/search/images';
-let searchItem = "" ;
 const ShyPic = `<img src='images/CameraShy.png' alt='Composite image of animals covering their faces' class='js-pic'/>`;
 const oopsImage = [
 				`<img src='images/OopsElephant.jpg' alt="Image of a baby elephant" class='js-error-pic'/>`,
@@ -25,7 +24,7 @@ const oopsImage = [
 				`<img src='images/OopsSloth.jpg' alt="Image of a sloth hanging upside down on a tree branch" class='js-error-pic'/>`,
 				`<img src='images/OopsTiger.jpg' alt="Image of a tiger" class='js-error-pic'/>`,
 				];
-
+let searchItem = "" ;
 
 
 //GBIF API call to find the scientific name
@@ -62,7 +61,8 @@ function displayGBIFData(data) {
 	const GBIFresults = data.results.map((item) => generateResultStrings(item));
 	$(".js-GBIF-results").html(GBIFresults);
 	$('ul').prepend(
-		`<h2 class="choice-list">Choose an animal</h2>
+		`
+			<h2 class="choice-list">Choose an animal</h2>
 		`);
 }
 
@@ -71,12 +71,12 @@ function displayGBIFData(data) {
 function handleErrorEntry() {
 	shuffle(oopsImage);
 	const oopsMsg = oopsImage[0];
-$('.js-GBIF-results').html("");
-$('.js-animal-results').html(oopsMsg);
-$('.js-animal-results').prepend(
-	`
-		<p class="js-error-msg">I AM NOT AN ANIMAL! Please, enter a different search term.</p>
-	`);
+	$('.js-GBIF-results').html("");
+	$('.js-animal-results').html(oopsMsg);
+	$('.js-animal-results').prepend(
+		`
+			<p class="js-error-msg">I AM NOT AN ANIMAL! Please, enter a different search term.</p>
+		`);
 	displayCitation();
 	}
 
@@ -246,7 +246,7 @@ function generateAnimalInfo(pics) {
 		<div class="js-pics">
 			<img src="${pics.display_sizes[0].uri}" class="js-pic" alt="${pics.title}">
 		</div>
-		`;
+	`;
 }
 
 
@@ -301,8 +301,8 @@ function getPopulationText(data) {
 	const popData = `${Red1Nar.result[0].populationtrend}`;
 	if (popData == 'decreasing') {
 		return `
-				<p class="arrow">Decreasing<img src="images/redArrow.png" alt="Red arrow pointing down" /></p>
-			`;
+			<p class="arrow">Decreasing<img src="images/redArrow.png" alt="Red arrow pointing down" /></p>
+		`;
 	}
 	else if (popData == 'increasing') {
 		return `
@@ -325,14 +325,14 @@ function getPopulationText(data) {
 // populates info in citation area
 function generateCiteStrings(item) {
 	return `
-			<div class="cite-area">
-				<h4 class="js-cite-title">Citations (and thanks to):</h4>
-				<p class="cite-text cite1">${item.GBIFCite}<a href=${item.GBIFWeb} aria-label="link to Global Biodiversity Information Facility site" class="cite-web" target="_blank" rel="noopener noreferrer">${item.GBIFWeb}</a></p>
-				<p class="cite-text cite2">${item.RedListCite}<a href=${item.RedListWeb} aria-label="link to Red List web page" class="cite-web" target="_blank" rel="noopener noreferrer">${item.RedListWeb}</a></p>
-				<p class="cite-text cite3">${item.GettyCite}<a href=${item.GettyWeb} aria-label="link to Getty Images Developer site" class="cite-web" target="_blank" rel="noopener noreferrer">${item.GettyWeb}</a></p>
-				<p class="cite-text cite4">${item.BackCite}</p>
-				<a href=${item.BackWeb} aria-label="link to Disney's Animal Kingdom Rafiki's Planet Watch site" class="cite-web" target="_blank" rel="noopener noreferrer">${item.BackWeb}</a>
-			</div>
+		<div class="cite-area">
+			<h4 class="js-cite-title">Citations (and thanks to):</h4>
+			<p class="cite-text cite1">${item.GBIFCite}<a href=${item.GBIFWeb} aria-label="link to Global Biodiversity Information Facility site" class="cite-web" target="_blank" rel="noopener noreferrer">${item.GBIFWeb}</a></p>
+			<p class="cite-text cite2">${item.RedListCite}<a href=${item.RedListWeb} aria-label="link to Red List web page" class="cite-web" target="_blank" rel="noopener noreferrer">${item.RedListWeb}</a></p>
+			<p class="cite-text cite3">${item.GettyCite}<a href=${item.GettyWeb} aria-label="link to Getty Images Developer site" class="cite-web" target="_blank" rel="noopener noreferrer">${item.GettyWeb}</a></p>
+			<p class="cite-text cite4">${item.BackCite}</p>
+			<a href=${item.BackWeb} aria-label="link to Disney's Animal Kingdom Rafiki's Planet Watch site" class="cite-web" target="_blank" rel="noopener noreferrer">${item.BackWeb}</a>
+		</div>
 	`;
 }
 
@@ -351,8 +351,8 @@ function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
 		$('.js-animal-results').html(GettyPic);
 	}
 	else {
-	const bits = GettyPic.images.map((index) => generateAnimalInfo(index));
-	$('.js-animal-results').html(bits);
+		const bits = GettyPic.images.map((index) => generateAnimalInfo(index));
+		$('.js-animal-results').html(bits);
 	}
 	const vuCategory = getCategoryText(Red2Spc);
 	const popTrend = getPopulationText(Red1Nar);
@@ -390,7 +390,8 @@ function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
 				<h3 class="js-title"><button type="button" aria-label="button to expand or collapse conservation information" class="display-btn">READ</button>CONSERVATION MEASURES</h3>
 		 		<div class="js-info collapse">${Red1Nar.result[0].conservationmeasures}</div>
 		 	</div>
-		`);
+		`
+	);
 	displayCitation();
 }
 
@@ -398,7 +399,7 @@ function displayAnimalBits(Red1Nar, Red2Spc, GettyPic) {
 // expand & collapse funcionality for large text returns
 function showText() {
 	$('.js-animal-results').on('click', function() {
-			$(event.target).closest('div').find('.js-info').slideToggle('collapse');
+		$(event.target).closest('div').find('.js-info').slideToggle('collapse');
 		event.preventDefault();
 	});
 }
